@@ -1,19 +1,16 @@
-package com.SpringBootQuiz.SpringBootQuiz.Controllers;
+package com.SpringBootQuiz.SpringBootQuiz.Clients;
 
-import com.SpringBootQuiz.SpringBootQuiz.Models.Client;
-import com.SpringBootQuiz.SpringBootQuiz.Repositories.ClientRepository;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 
-@RestController
-public class ClientController {
+@Service
+public class ClientService {
     private final ClientRepository repository;
 
-    ClientController(ClientRepository repository) {
+    ClientService(ClientRepository repository) {
         this.repository = repository;
     }
 
     // return all clients in the system
-    @GetMapping("/clients")
     Object all() {
         try {
             return repository.findAll();
@@ -22,8 +19,7 @@ public class ClientController {
         }
     }
 
-    @PostMapping("/clients")
-    Object newClient(@RequestBody Client newClient) {
+    Object newClient(Client newClient) {
         try {
             return repository.save(newClient);
         }catch (Exception e ){
@@ -31,9 +27,7 @@ public class ClientController {
         }
     }
 
-    // Single item
-    @GetMapping("/clients/{id}")
-    Object getClientByID(@PathVariable Long id) {
+    Object getClientByID(Long id) {
         try {
             return repository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Could not find client : " + id .toString()));
@@ -42,8 +36,7 @@ public class ClientController {
         }
     }
 
-    @PutMapping("/clients/{id}")
-    Object replaceClient(@RequestBody Client newClient, @PathVariable Long id) {
+    Object updateClient(Client newClient,Long id) {
         try {
             return repository.findById(id)
                     .map(client -> {
@@ -58,8 +51,12 @@ public class ClientController {
         }
     }
 
-    @DeleteMapping("/clients/{id}")
-    void deleteClient(@PathVariable Long id) {
-        repository.deleteById(id);
+    Object deleteClient(Long id) {
+        try {
+            repository.deleteById(id);
+            return true ;
+        }catch (Exception e){
+            return e.getMessage() ;
+        }
     }
 }

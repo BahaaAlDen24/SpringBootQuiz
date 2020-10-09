@@ -1,19 +1,16 @@
-package com.SpringBootQuiz.SpringBootQuiz.Controllers;
+package com.SpringBootQuiz.SpringBootQuiz.Products;
 
-import com.SpringBootQuiz.SpringBootQuiz.Models.Product;
-import com.SpringBootQuiz.SpringBootQuiz.Repositories.ProductRepository;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 
-@RestController
-public class ProductController {
+@Service
+public class ProductService {
+
     private final ProductRepository repository;
 
-    ProductController(ProductRepository repository) {
+    ProductService(ProductRepository repository) {
         this.repository = repository;
     }
 
-    // return all Products in the system
-    @GetMapping("/Products")
     Object all() {
         try {
             return repository.findAll();
@@ -22,8 +19,7 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/Products")
-    Object newProduct(@RequestBody Product newProduct) {
+    Object newProduct(Product newProduct) {
         try {
             return repository.save(newProduct);
         }catch (Exception e ){
@@ -31,9 +27,7 @@ public class ProductController {
         }
     }
 
-    // Single item
-    @GetMapping("/Products/{id}")
-    Object getProductByID(@PathVariable Long id) {
+    Object getProductByID(Long id) {
         try {
             return repository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Could not find Product : " + id .toString()));
@@ -42,8 +36,7 @@ public class ProductController {
         }
     }
 
-    @PutMapping("/Products/{id}")
-    Object replaceProduct(@RequestBody Product newProduct, @PathVariable Long id) {
+    Object updateProduct(Product newProduct,Long id) {
         try {
             return repository.findById(id)
                     .map(Product -> {
@@ -60,8 +53,12 @@ public class ProductController {
         }
     }
 
-    @DeleteMapping("/Products/{id}")
-    void deleteProduct(@PathVariable Long id) {
-        repository.deleteById(id);
+    Object deleteProduct(Long id) {
+        try {
+            repository.deleteById(id);
+            return true ;
+        }catch (Exception e){
+            return e.getMessage() ;
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.SpringBootQuiz.SpringBootQuiz.Models;
+package com.SpringBootQuiz.SpringBootQuiz.Products;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
