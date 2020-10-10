@@ -62,12 +62,11 @@ public class SaleOperationService {
         try {
 
             for (SaleTransaction saleTransaction :newSaleOperation.getSaleTransactions()) {
-                saleTransaction.setTotalPrice(saleTransaction.getUnitPrice() * saleTransaction.getQuantity());
+                Product product = (Product) productService.getProductByID(saleTransaction.getProduct().getId()) ;
+                saleTransaction.setUnitPrice(product.getPrice());
+                saleTransaction.setTotalPrice(product.getPrice() * saleTransaction.getQuantity());
                 saleTransaction.setSaleOperation(newSaleOperation);
                 if (saleTransaction.getId()== null) {
-                    Product product = (Product) productService.getProductByID(saleTransaction.getProduct().getId()) ;
-                    saleTransaction.setUnitPrice(product.getPrice());
-                    saleTransaction.setTotalPrice(product.getPrice() * saleTransaction.getQuantity());
                     saleTransactionService.newSaleTransaction(saleTransaction);
                 }else if (saleTransactionService.existsById(saleTransaction.getId())){
                     saleTransactionService.updateSaleTransaction(saleTransaction, saleTransaction.getId());
