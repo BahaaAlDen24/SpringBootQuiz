@@ -5,6 +5,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -13,7 +14,7 @@ import java.util.Objects;
 public class Product {
 
     private @Id
-    @GeneratedValue
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     Long id;
 
     private String name;
@@ -100,11 +101,6 @@ public class Product {
                 category.equals(product.category) &&
                 Objects.equals(createDateTime, product.createDateTime) &&
                 Objects.equals(updateDateTime, product.updateDateTime);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, description, category, price, quantity, createDateTime, updateDateTime);
     }
 
     @Override

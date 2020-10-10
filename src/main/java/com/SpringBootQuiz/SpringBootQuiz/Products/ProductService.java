@@ -2,6 +2,8 @@ package com.SpringBootQuiz.SpringBootQuiz.Products;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductService {
 
@@ -11,32 +13,32 @@ public class ProductService {
         this.repository = repository;
     }
 
-    Object all() {
+    public List<Product> all() {
         try {
             return repository.findAll();
         }catch (Exception e ){
-            return e.getMessage() ;
+            throw e ;
         }
     }
 
-    Object newProduct(Product newProduct) {
+    public Product newProduct(Product newProduct) {
         try {
             return repository.save(newProduct);
         }catch (Exception e ){
-            return e.getMessage() ;
+            throw e ;
         }
     }
 
-    Object getProductByID(Long id) {
+    public Product getProductByID(Long id) {
         try {
             return repository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Could not find Product : " + id .toString()));
         }catch (Exception e ){
-            return e.getMessage() ;
+            throw e ;
         }
     }
 
-    Object updateProduct(Product newProduct,Long id) {
+    public Object updateProduct(Product newProduct,Long id) {
         try {
             return repository.findById(id)
                     .map(Product -> {
@@ -53,12 +55,12 @@ public class ProductService {
         }
     }
 
-    Object deleteProduct(Long id) {
+    public Object deleteProduct(Long id) {
         try {
             repository.deleteById(id);
             return true ;
         }catch (Exception e){
-            return e.getMessage() ;
+            throw e ;
         }
     }
 }
