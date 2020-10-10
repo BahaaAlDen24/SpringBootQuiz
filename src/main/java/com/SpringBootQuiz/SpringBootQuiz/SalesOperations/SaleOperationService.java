@@ -7,6 +7,8 @@ import com.SpringBootQuiz.SpringBootQuiz.SalesTransactions.SaleTransactionServic
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class SaleOperationService {
     private final SaleOperationRepository repository;
@@ -29,6 +31,7 @@ public class SaleOperationService {
         }
     }
 
+    @Transactional
     public Object newSaleOperation(SaleOperation newSaleOperation) {
         try {
             for (SaleTransaction saleTransaction :newSaleOperation.getSaleTransactions()) {
@@ -43,7 +46,7 @@ public class SaleOperationService {
                 saleTransaction.setSaleOperation(newSaleOperation);
                 saleTransactionService.updateSaleTransaction(saleTransaction,saleTransaction.getId()) ;
             }
-            return newSaleOperation ;
+            return repository.findById(newSaleOperation.getId());
         }catch (Exception e ){
             return e.getMessage() ;
         }
@@ -58,6 +61,7 @@ public class SaleOperationService {
         }
     }
 
+    @Transactional
     public Object updateSaleOperation(SaleOperation newSaleOperation,Long id) {
         try {
 
@@ -84,7 +88,7 @@ public class SaleOperationService {
                     })
                     .orElseThrow(() -> new RuntimeException("Could not find SaleOperation : " + id .toString()));
 
-            return newSaleOperation ;
+            return repository.findById(newSaleOperation.getId()) ;
 
         }catch (Exception e ){
             return e.getMessage() ;
