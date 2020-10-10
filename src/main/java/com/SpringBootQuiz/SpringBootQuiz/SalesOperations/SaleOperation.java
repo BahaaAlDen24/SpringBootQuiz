@@ -1,12 +1,12 @@
 package com.SpringBootQuiz.SpringBootQuiz.SalesOperations;
 
 import com.SpringBootQuiz.SpringBootQuiz.Clients.Client;
-import com.SpringBootQuiz.SpringBootQuiz.SaleTransaction.SaleTransaction;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.SpringBootQuiz.SpringBootQuiz.SalesTransactions.SaleTransaction;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,6 +19,7 @@ public class SaleOperation {
     @ManyToOne
     private Client client;
     private String seller;
+    @Audited
     private int totalPrice;
 
     @OneToMany(mappedBy = "saleOperation", cascade = CascadeType.ALL)

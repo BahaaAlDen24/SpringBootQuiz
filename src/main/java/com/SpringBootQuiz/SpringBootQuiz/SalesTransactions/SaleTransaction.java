@@ -1,13 +1,11 @@
-package com.SpringBootQuiz.SpringBootQuiz.SaleTransaction;
+package com.SpringBootQuiz.SpringBootQuiz.SalesTransactions;
 
-import com.SpringBootQuiz.SpringBootQuiz.Clients.Client;
 import com.SpringBootQuiz.SpringBootQuiz.Products.Product;
 import com.SpringBootQuiz.SpringBootQuiz.SalesOperations.SaleOperation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -24,8 +22,11 @@ public class SaleTransaction {
     @JsonBackReference
     private SaleOperation saleOperation;
 
+    @Audited
     private int quantity;
+    @Audited
     private int unitPrice;
+    @Audited
     private int totalPrice;
 
     @CreationTimestamp

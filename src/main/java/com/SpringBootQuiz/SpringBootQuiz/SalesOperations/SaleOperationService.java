@@ -2,8 +2,8 @@ package com.SpringBootQuiz.SpringBootQuiz.SalesOperations;
 
 import com.SpringBootQuiz.SpringBootQuiz.Products.Product;
 import com.SpringBootQuiz.SpringBootQuiz.Products.ProductService;
-import com.SpringBootQuiz.SpringBootQuiz.SaleTransaction.SaleTransaction;
-import com.SpringBootQuiz.SpringBootQuiz.SaleTransaction.SaleTransactionService;
+import com.SpringBootQuiz.SpringBootQuiz.SalesTransactions.SaleTransaction;
+import com.SpringBootQuiz.SpringBootQuiz.SalesTransactions.SaleTransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,12 +49,12 @@ public class SaleOperationService {
         }
     }
 
-    public Object getSaleOperationByID(Long id) {
+    public SaleOperation getSaleOperationByID(Long id) {
         try {
             return repository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Could not find SaleOperation : " + id .toString()));
         }catch (Exception e ){
-            return e.getMessage() ;
+            throw e;
         }
     }
 
@@ -62,11 +62,12 @@ public class SaleOperationService {
         try {
 
             for (SaleTransaction saleTransaction :newSaleOperation.getSaleTransactions()) {
-                Product product = (Product) productService.getProductByID(saleTransaction.getProduct().getId()) ;
-                saleTransaction.setUnitPrice(product.getPrice());
-                saleTransaction.setTotalPrice(product.getPrice() * saleTransaction.getQuantity());
+                saleTransaction.setTotalPrice(saleTransaction.getUnitPrice() * saleTransaction.getQuantity());
                 saleTransaction.setSaleOperation(newSaleOperation);
                 if (saleTransaction.getId()== null) {
+                    Product product = (Product) productService.getProductByID(saleTransaction.getProduct().getId()) ;
+                    saleTransaction.setUnitPrice(product.getPrice());
+                    saleTransaction.setTotalPrice(product.getPrice() * saleTransaction.getQuantity());
                     saleTransactionService.newSaleTransaction(saleTransaction);
                 }else if (saleTransactionService.existsById(saleTransaction.getId())){
                     saleTransactionService.updateSaleTransaction(saleTransaction, saleTransaction.getId());

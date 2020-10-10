@@ -1,4 +1,4 @@
-package com.SpringBootQuiz.SpringBootQuiz.SaleTransaction;
+package com.SpringBootQuiz.SpringBootQuiz.SalesTransactions;
 
 import org.springframework.stereotype.Service;
 
@@ -26,12 +26,12 @@ public class SaleTransactionService {
         }
     }
 
-    public Object getSaleTransactionByID(Long id) {
+    public SaleTransaction getSaleTransactionByID(Long id) {
         try {
             return repository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Could not find SaleTransaction : " + id .toString()));
         }catch (Exception e ){
-            return e.getMessage() ;
+            throw e ;
         }
     }
 
@@ -52,34 +52,6 @@ public class SaleTransactionService {
         }
     }
 
-//    public Object saveOrUpdateSaleTransaction(SaleTransaction newSaleTransaction) {
-//        try {
-//            if (repository.findById(newSaleTransaction.getId()) != null){
-//                SaleTransaction saleTransaction = new SaleTransaction();
-//                saleTransaction.setProduct(newSaleTransaction.getProduct());
-//                saleTransaction.setSaleOperation(newSaleTransaction.getSaleOperation());
-//                saleTransaction.setQuantity(newSaleTransaction.getQuantity());
-//                SaleTransaction.setUnitPrice(newSaleTransaction.getUnitPrice());
-//                SaleTransaction.setTotalPrice(newSaleTransaction.getTotalPrice());
-//                return repository.save(SaleTransaction);
-//            }else{
-//
-//            }
-//            return repository.findById(newSaleTransaction.getId())
-//                    .map(SaleTransaction -> {
-//                        SaleTransaction.setProduct(newSaleTransaction.getProduct());
-//                        SaleTransaction.setSaleOperation(newSaleTransaction.getSaleOperation());
-//                        SaleTransaction.setQuantity(newSaleTransaction.getQuantity());
-//                        SaleTransaction.setUnitPrice(newSaleTransaction.getUnitPrice());
-//                        SaleTransaction.setTotalPrice(newSaleTransaction.getTotalPrice());
-//                        return repository.save(SaleTransaction);
-//                    })
-//                    .orElse(() ->  repository.save(newSaleTransaction););
-//        }catch (Exception e ){
-//            return e.getMessage() ;
-//        }
-//    }
-//
     public boolean existsById(Long id) {
            return repository.existsById(id);
     }

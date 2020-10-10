@@ -1,4 +1,4 @@
-package com.SpringBootQuiz.SpringBootQuiz.SaleTransaction;
+package com.SpringBootQuiz.SpringBootQuiz.SalesTransactions;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

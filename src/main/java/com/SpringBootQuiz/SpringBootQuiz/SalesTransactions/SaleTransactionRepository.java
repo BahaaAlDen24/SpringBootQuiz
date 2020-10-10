@@ -1,4 +1,4 @@
-package com.SpringBootQuiz.SpringBootQuiz.SaleTransaction;
+package com.SpringBootQuiz.SpringBootQuiz.SalesTransactions;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

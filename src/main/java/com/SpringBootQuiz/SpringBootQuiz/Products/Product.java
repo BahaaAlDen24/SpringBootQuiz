@@ -2,11 +2,10 @@ package com.SpringBootQuiz.SpringBootQuiz.Products;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -20,7 +19,9 @@ public class Product {
     private String name;
     private String description;
     private String category;
+    @Audited
     private int price;
+    @Audited
     private int quantity;
 
     @CreationTimestamp
