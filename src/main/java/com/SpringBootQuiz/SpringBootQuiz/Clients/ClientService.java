@@ -11,7 +11,7 @@ public class ClientService {
     }
 
     // return all clients in the system
-    Object all() {
+    public Object all() {
         try {
             return repository.findAll();
         }catch (Exception e ){
@@ -19,7 +19,7 @@ public class ClientService {
         }
     }
 
-    Object newClient(Client newClient) {
+    public Object newClient(Client newClient) {
         try {
             return repository.save(newClient);
         }catch (Exception e ){
@@ -27,7 +27,7 @@ public class ClientService {
         }
     }
 
-    Object getClientByID(Long id) {
+    public Object getClientByID(Long id) {
         try {
             return repository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Could not find client : " + id .toString()));
@@ -36,7 +36,7 @@ public class ClientService {
         }
     }
 
-    Object updateClient(Client newClient,Long id) {
+    public Object updateClient(Client newClient,Long id) {
         try {
             return repository.findById(id)
                     .map(client -> {
@@ -51,7 +51,7 @@ public class ClientService {
         }
     }
 
-    Object deleteClient(Long id) {
+    public Object deleteClient(Long id) {
         try {
             repository.deleteById(id);
             return true ;

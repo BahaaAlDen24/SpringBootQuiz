@@ -19,6 +19,16 @@ public class Client {
     private String lastName;
     private String mobile;
 
+    public Client() {
+    }
+
+    public Client(Long id, String name, String lastName, String mobile) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.mobile = mobile;
+    }
+
     @CreationTimestamp
     private LocalDateTime createDateTime;
     @UpdateTimestamp
